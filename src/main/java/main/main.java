@@ -1,16 +1,35 @@
 package main;
+import Entity.Bebida;
+import Entity.Comida;
+import Entity.Producto;
+
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class main {
     public static void main(String[] args) {
 
 
+        List<Producto> lista_productos = new ArrayList<>();
+
+        lista_productos.add(new Bebida("pepsi clasic",3500,100,"gaseosa",2500,"PEPSICO"));
+        lista_productos.add(new Bebida("7up clasic",3500,100,"gaseosa",2500,"PEPSICO"));
+        lista_productos.add(new Bebida("pepsi ligth",3500,100,"gaseosa",2500,"PEPSICO"));
+        lista_productos.add(new Bebida("7up Ligth",3500,100,"gaseosa",2500,"PEPSICO"));
+
+        lista_productos.add(new Comida("arroz 500g largo fino ", 1500,200,"granos",0.5,"molinos"));
+        lista_productos.add(new Comida("fideos tirabuzon", 2500,200,"pastas",0.5,"molinos"));
+        lista_productos.add(new Comida("Te", 1800,200,"infuciones",0.250,"morenita"));
+
+
+
+
+
+        lista_productos.forEach(System.out::println);
+
          Scanner scanner = new Scanner(System.in);
-       // private static GestorProductosJson gestorProductos = new GestorProductosJson();
-       // private static GestorPedidosJson gestorPedidos = new GestorPedidosJson();
-
-
             int opcion = 0;
 
             do {
@@ -80,18 +99,20 @@ public class main {
     }
 
     private static int agregarProducto(){
-        System.out.println("agregar");
+        System.out.println("producto agregado.");
         return  1;
         }
     private static int listarProductos(){
-        System.out.println("LISTAR");
+
         return  2;
     }
     private static int actualizarProducto(){
-
+        System.out.println("producto editado");
         return  3;
     }
     private static int eliminarProducto(){
+        System.out.println("se eliminara producto);
+
         return  4;
     }
     private static int crearPedido(){
