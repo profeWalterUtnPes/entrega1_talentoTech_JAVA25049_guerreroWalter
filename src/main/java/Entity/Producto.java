@@ -1,17 +1,19 @@
 package Entity;
 
-public abstract class Producto {
+public class Producto {
+    protected int id;
     protected String nombre;
     protected double precioUnitario;
     protected int cantidad;
-    protected static int cont = 0;
+    protected static int cont = 1;
 
 
     public Producto() {
-
+        this.id =cont++;
     }
 
     public Producto(String nombre, double precioUnitario, int cantidad) {
+        this.id = cont++;
         this.nombre = nombre;
         this.precioUnitario = precioUnitario;
         this.cantidad = cantidad;
@@ -34,9 +36,17 @@ public abstract class Producto {
         this.precioUnitario = precioUnitario;
     }
 
+    public void setCantidad(int cantidad) {this.cantidad = cantidad; }
+
     public int getCantidad() {
         return cantidad;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 }
