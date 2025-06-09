@@ -25,8 +25,8 @@ public class Bebida extends Producto {
         super();
     }
 
-    public String getTipoBebida() {
-        return tipoBebida;
+    public String getTipoBebida(String tipoBebida) {
+        return this.tipoBebida;
     }
 
     public void setTipoBebida(String tipoBebida) {

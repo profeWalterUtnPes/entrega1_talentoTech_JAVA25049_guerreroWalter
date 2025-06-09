@@ -24,7 +24,7 @@ public class main {
 
                 switch (opcion) {
                     case 1:
-                        agregarProducto();
+                        lista_productos.add(agregarProducto());
                         break;
                     case 2:
                         listarProductos(lista_productos);
@@ -138,18 +138,42 @@ public class main {
     private static Bebida cargarBebida(){
         Scanner sc = new Scanner(System.in);
         Bebida beb = new Bebida();
-        System.out.println("Ingrese Nombre: ");
-        String nombre = sc.next();
-        beb.setNombre(nombre);
+        try
+        {
+            System.out.println("Ingrese Nombre: ");
+            String nombre = sc.next();
+            beb.setNombre(nombre);
+            sc.nextLine();
 
-        System.out.println("Ingrese Precio: ");
-        double precio = sc.nextDouble();
-        beb.setPrecioUnitario(precio);
+            System.out.println("Ingrese Precio: ");
+            double precio = sc.nextDouble();
+            beb.setPrecioUnitario(precio);
+            sc.nextLine();
 
-        System.out.println("Ingrese Cantidad: ");
-        int cantidad = sc.nextInt();
-        beb.setCantidad(cantidad);
+            System.out.println("Ingrese Cantidad: ");
+            int cantidad = sc.nextInt();
+            beb.setCantidad(cantidad);
+            sc.nextLine();
 
+            System.out.println("Ingrese tipo de bebida: ");
+            String tipoBebida = sc.next();
+            beb.setTipoBebida(tipoBebida);
+            sc.nextLine();
+
+            System.out.println("Ingrese cantidad en cm cubicos: ");
+            int mililitros = sc.nextInt();
+            beb.setMilitros(mililitros);
+            sc.nextLine();
+
+            System.out.println("Ingrese Marca del producto: ");
+            String marca = sc.next();
+            beb.setMarca(marca);
+            sc.nextLine();
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.toString());
+        }
 
         return beb;
     }
