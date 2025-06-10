@@ -158,6 +158,37 @@ public class main
                 producto.setCantidad(cant);
                 sc.nextLine();
 
+                if(producto instanceof Bebida)
+                {
+                    System.out.println("Ingrese nuevo tipo de bebida: ");
+                    String tipoBebida = sc.next();
+                    ((Bebida) producto).setTipoBebida(tipoBebida);
+                    sc.nextLine();
+
+                    System.out.println("Ingrese nueva cantidad en cm cubicos: ");
+                    int mililitros = sc.nextInt();
+                    ((Bebida) producto).setMilitros(mililitros);
+                    sc.nextLine();
+
+                    System.out.println("Ingrese nueva Marca del producto: ");
+                    String marca = sc.nextLine();
+                    ((Bebida) producto).setMarca(marca);
+                    //sc.nextLine();
+                }else if(producto instanceof Comida) {
+                    System.out.println("Ingrese nueva Categoria de Comida ingresada: ");
+                    String tipocomida = sc.nextLine();
+                    ((Comida) producto).setTipoComida(tipocomida);
+                    //sc.nextLine();
+
+                    System.out.println("Ingrese nuevo peso de Comida por presentacion: ");
+                    double peso = sc.nextDouble();
+                    ((Comida) producto).setPeso(peso);
+                    sc.nextLine();
+
+                    System.out.println("Ingrese nueva Marca del producto: ");
+                    String marca = sc.nextLine();
+                    ((Comida) producto).setMarca(marca);
+                }
                 System.out.println("Producto con ID " + id + " actualizado exitosamente.");
                 break; //cortar
             }
