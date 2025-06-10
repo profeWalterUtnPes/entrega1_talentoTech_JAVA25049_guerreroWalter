@@ -46,10 +46,10 @@ public class Comida extends  Producto {
                 "tipoComida='" + tipoComida + '\'' +
                 ", peso=" + peso +
                 ", marca='" + marca + '\'' +
+                ", id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", precioUnitario=" + precioUnitario +
                 ", cantidad=" + cantidad +
                 '}';
     }
-
 }

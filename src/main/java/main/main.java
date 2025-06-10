@@ -24,7 +24,11 @@ public class main {
 
                 switch (opcion) {
                     case 1:
-                        lista_productos.add(agregarProducto());
+                        Producto aux = new Producto();
+                        aux= agregarProducto();
+                        if (aux!=null){
+                            lista_productos.add(aux);
+                        }
                         break;
                     case 2:
                         listarProductos(lista_productos);
@@ -95,7 +99,8 @@ public class main {
         System.out.print("Elija una opción: ");
     }
 
-    private static Producto agregarProducto(){
+    private static Producto agregarProducto()
+    {
         Producto aux = new Producto();
         Scanner sc = new Scanner(System.in);
         System.out.println("Que va ingresar una Bebida :1 o Comida: 2 ");
@@ -104,53 +109,58 @@ public class main {
         {
             aux = new Bebida();
             aux = cargarBebida();
-
         }
         else
         {
-
+            if (opcion==2)
+            {
+                aux = new Comida();
+                aux = cargarComida();
+            }
         }
-
-                System.out.println("producto agregado.");
+        //System.out.println("producto agregado.");
         return aux;
         }
-    private static int listarProductos(List<Producto>prod){
-        prod.forEach(System.out::println);
-        /*System.out.println("ID: "+ prod.get(6).getId() +
-                " Producto: " + prod.get(6).getNombre());*/
-        return  2;
-    }
-    private static int actualizarProducto(){
-        System.out.println("producto editado");
-        return  3;
-    }
-    private static int eliminarProducto(){
-        System.out.println("se eliminara producto");
 
-        return  4;
+    private static void listarProductos(List<Producto>prod){
+        prod.forEach(System.out::println);
+
     }
-    private static int crearPedido(){
-        return  5;
+    private static void actualizarProducto(Producto prod){
+        System.out.println("producto editado");
+        
+
     }
-    private static int listarPedidos(){
-        return  6;
+    private static void eliminarProducto(){
+        System.out.println("se eliminara producto");
     }
-    private static Bebida cargarBebida(){
+    private static void crearPedido(){
+
+    }
+    private static void listarPedidos(){
+
+    }
+
+
+
+    private static Bebida cargarBebida()
+    {
         Scanner sc = new Scanner(System.in);
         Bebida beb = new Bebida();
         try
         {
-            System.out.println("Ingrese Nombre: ");
-            String nombre = sc.next();
-            beb.setNombre(nombre);
-            sc.nextLine();
 
-            System.out.println("Ingrese Precio: ");
+            System.out.println("Ingrese Nombre de Bebida: ");
+            String nombre = sc.nextLine();
+            beb.setNombre(nombre);
+            //sc.nextLine();
+
+            System.out.println("Ingrese Precio de Bebida: ");
             double precio = sc.nextDouble();
             beb.setPrecioUnitario(precio);
             sc.nextLine();
 
-            System.out.println("Ingrese Cantidad: ");
+            System.out.println("Ingrese Cantidad para Stock: ");
             int cantidad = sc.nextInt();
             beb.setCantidad(cantidad);
             sc.nextLine();
@@ -166,18 +176,61 @@ public class main {
             sc.nextLine();
 
             System.out.println("Ingrese Marca del producto: ");
-            String marca = sc.next();
+            String marca = sc.nextLine();
             beb.setMarca(marca);
-            sc.nextLine();
+            //sc.nextLine();
+
         }
         catch (Exception e)
         {
-            System.out.println(e.toString());
+            System.out.println("Ocurrio un error de tipeo: " + e.toString());
+            return null;
         }
-
         return beb;
     }
 
+    private static Comida cargarComida()
+    {
+        Scanner sc = new Scanner(System.in);
+        Comida comida = new Comida();
+        try
+        {
+            System.out.println("Ingrese Nombre de Comida: ");
+            String nombre = sc.nextLine();
+            comida.setNombre(nombre);
+
+
+            System.out.println("Ingrese Precio de la Comida: ");
+            double precio = sc.nextDouble();
+            comida.setPrecioUnitario(precio);
+            sc.nextLine();
+
+            System.out.println("Ingrese cantidad de Comida para stock: ");
+            int cantidad = sc.nextInt();
+            comida.setCantidad(cantidad);
+            sc.nextLine();
+
+            System.out.println("Ingrese Categoria de Comida ingresada: ");
+            String tipocomida = sc.nextLine();
+            comida.setTipoComida(tipocomida);
+            //sc.nextLine();
+
+            System.out.println("Ingrese peso de Comida por presentacion: ");
+            double peso = sc.nextDouble();
+            comida.setPeso(peso);
+            sc.nextLine();
+
+            System.out.println("Ingrese Marca del producto: ");
+            String marca = sc.nextLine();
+            comida.setMarca(marca);
+
+        }
+        catch (Exception e) {
+            System.out.println("Ocurrio un error de tipeo: " + e.toString());
+            return null;
+        }
+        return comida;
+    }
 
 }
 
