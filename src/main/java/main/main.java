@@ -1,6 +1,7 @@
 package main;
 import Entity.Bebida;
 import Entity.Comida;
+import Entity.Pedido;
 import Entity.Producto;
 
 import javax.swing.*;
@@ -16,6 +17,9 @@ public class main
     {
 
         List<Producto> lista_productos = new ArrayList<Producto>();
+        List<Pedido> listaPed = new ArrayList<Pedido>();
+
+
         lista_productos = CargaPrevia();
 
          Scanner scanner = new Scanner(System.in);
@@ -39,19 +43,30 @@ public class main
                         break;
                     case 3:
                         int id;
-                        id = elegirProducto(lista_productos);
+                        id = elegirProducto(3,lista_productos);
                             actualizarProducto(id, lista_productos);
                         break;
                     case 4:
                         int id_elim;
-                        id_elim = elegirProducto(lista_productos);
+                        id_elim = elegirProducto(4,lista_productos);
                         eliminarProducto(id_elim, lista_productos);
                         break;
                     case 5:
-                        crearPedido();
+                        id=elegirProductoPedido(5,lista_productos);
+                        if(id!=-1)
+                            {
+                            Producto p = new Producto();
+                            p= lista_productos.get(id);
+                            Pedido auxPed = new Pedido();
+                            auxPed= crearPedido(p);
+                            if(auxPed != null)
+                            {
+                                listaPed.add(auxPed);
+                            }
+                        }
                         break;
                     case 6:
-                        listarPedidos();
+                        listarPedidos(listaPed);
                         break;
                     case 7:
                         System.out.println("¡Gracias por usar la aplicación! ¡Hasta pronto!");
@@ -137,6 +152,28 @@ public class main
     {
         prod.forEach(System.out::println);
 
+        System.out.println("REPORTE:");
+        System.out.println("________");
+
+        for (int i = 0; i < prod.size(); i++) {
+            System.out.println("_____________________________________________________");
+            System.out.println("Producto: "+ prod.get(i).getNombre()+ " PU: " + prod.get(i).getPrecioUnitario());
+            System.out.println("Cantidad: " + prod.get(i).getCantidad());
+            if(prod.get(i) instanceof Bebida)
+            {
+                System.out.println("Marca: " + ((Bebida) prod.get(i)).getMarca());
+                System.out.println("Tipo de Bebida: " + ((Bebida) prod.get(i)).getTipoBebida() );
+                System.out.println("Mililitros: " + ((Bebida) prod.get(i)).getMilitros());
+            }
+            if (prod.get(i) instanceof Comida)
+            {
+                System.out.println("Marca: " + ((Comida) prod.get(i)).getMarca());
+                System.out.println("Peso: " + ((Comida) prod.get(i)).getPeso() );
+                System.out.println("Tipo de Comida: " + ((Comida) prod.get(i)).getTipoComida());
+            }
+        }
+        System.out.println("_____________________________________________________");
+
     }
     private static List<Producto> actualizarProducto(int id, List<Producto>lista) {
         Scanner sc = new Scanner(System.in);
@@ -196,8 +233,8 @@ public class main
         }
         return lista;
     }
-        private static List<Producto> eliminarProducto (int id, List<Producto>lista)
-        {
+    private static List<Producto> eliminarProducto (int id, List<Producto>lista)
+    {
             Scanner sc = new Scanner(System.in);
 
             System.out.println("SE VA A ELIMINAR DE LA LISTA EL PRODUCTO CON ID: "+ id);
@@ -217,12 +254,48 @@ public class main
             }
             return lista;
         }
-        private static void crearPedido ()
+        private static Pedido crearPedido (Producto prod)
         {
+            Producto unProd = new Producto();
+            unProd = prod;
+            Pedido unPedido = new Pedido();
+            System.out.println("producto: " + unProd.getNombre() +" , Precio: " + unProd.getPrecioUnitario()+ " , Stock: " + unProd.getCantidad());
 
+            unPedido.setProducto(unProd);
+            try {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("ingrese nro de pedido: ");
+                int pedido = sc.nextInt();
+                unPedido.setNropedido(pedido);
+                sc.nextLine();
+
+                System.out.println("Ingrese cantidad a Pedir: ");
+                int cant = sc.nextInt();
+                unPedido.setCantidad(cant);
+
+                System.out.println("PRODUCTO AGREGADO A PEDIDO " + pedido + " CON EXITO");
+            }
+            catch (Exception e) {
+                System.out.println("Ocurrio un error de tipeo: " + e.toString());
+                return null;
+            }
+
+            return unPedido ;
         }
-        private static void listarPedidos ()
+        private static void listarPedidos (List<Pedido>pedido)
         {
+            pedido.forEach(System.out::println);
+
+            System.out.println("REPORTE:");
+            System.out.println("________");
+
+            for (int i = 0; i < pedido.size(); i++) {
+                System.out.println("_____________________________________________________");
+                System.out.println("Pedido: "+ pedido.get(i).getNropedido()+ " Nombre: " + pedido.get(i).getProducto().getNombre());
+                System.out.println("Cantidad pedida: " + pedido.get(i).getCantidad());
+                System.out.println("Precio unitario: " + pedido.get(i).getProducto().getPrecioUnitario());
+            }
+            System.out.println("_____________________________________________________");
 
         }
         private static Bebida cargarBebida ()
@@ -302,22 +375,84 @@ public class main
                 String marca = sc.nextLine();
                 comida.setMarca(marca);
 
+                System.out.println("NUEVO PRODUCTO INGRESADO");
+
             } catch (Exception e) {
                 System.out.println("Ocurrio un error de tipeo: " + e.toString());
                 return null;
             }
             return comida;
         }
-        private static int elegirProducto (List < Producto > lista)
+        private static int elegirProducto (int opcion, List < Producto > lista)
         {
-            for (int i = 0; i < lista.size(); i++) {
-                System.out.println("Nombre: " + lista.get(i).getNombre() + "    ID: " + lista.get(i).getId());
+            String eleccion ="";
+            if(opcion==3)
+            {
+                eleccion = "MODIFICAR";
             }
+            else
+            {
+                if(opcion==4)
+                {
+                    eleccion = "ELIMINAR";
+                }
+                else
+                {
+                    if(opcion==5)
+                    {
+                        eleccion = "CREAR PEDIDO";
+                    }
+                }
+            }
+
+            for (int i = 0; i < lista.size(); i++) {
+                System.out.println("_____________________________________________________");
+                System.out.println("ID: "+ lista.get(i).getId() + " Nombre: " + lista.get(i).getNombre());
+            }
+            System.out.println("_____________________________________________________");
             Scanner sc = new Scanner(System.in);
-            System.out.println("SELECCIONE NRO DE ID PARA MODIFICAR O ELIMINAR");
+            System.out.println("SELECCIONE NRO DE ID PARA " + eleccion);
             int valor = sc.nextInt();
             return valor;
         }
+
+    private static int elegirProductoPedido (int opcion, List < Producto > lista)
+    {
+        String eleccion ="";
+        if(opcion==5)
+        {
+            eleccion = "CREAR PEDIDO";
+        }
+
+        for (int i = 0; i < lista.size(); i++) {
+            System.out.println("_____________________________________________________");
+            System.out.println("ID: "+ lista.get(i).getId() + " Nombre: " + lista.get(i).getNombre());
+        }
+        System.out.println("_____________________________________________________");
+        int valor = -1;
+        Scanner sc = new Scanner(System.in);
+        System.out.println("SELECCIONE NRO DE ID PARA " + eleccion);
+        System.out.println("Si quiere agregar mas productos vuelva a agregar un producto con el mismo nro de pedido");
+        try {
+            valor = sc.nextInt();
+        } catch (Exception e) {
+            System.out.println("Ocurrio un error de tipeo: " + e.toString());
+        }
+
+        int indice = -1;
+        for (int i = 0; i < lista.size(); i++) {
+            if(valor == lista.get(i).getId())
+            {
+                indice = i;
+                break;
+            }
+
+        }
+        if (indice==-1){
+            System.out.println("el indice no existe");
+        }
+        return indice;
+    }
 
 }
 
