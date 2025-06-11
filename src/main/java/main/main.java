@@ -273,6 +273,10 @@ public class main
                 int cant = sc.nextInt();
                 unPedido.setCantidad(cant);
 
+                //pruebo aca
+                unPedido.restarStock(cant);
+                System.out.println("Se descontaron " + cant + " del STOCK de producto: " + unPedido.getProducto().getNombre());
+
                 System.out.println("PRODUCTO AGREGADO A PEDIDO " + pedido + " CON EXITO");
             }
             catch (Exception e) {

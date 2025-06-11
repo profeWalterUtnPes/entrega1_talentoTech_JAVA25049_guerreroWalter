@@ -39,6 +39,10 @@ public class Pedido
         this.cantidad = cantidad;
     }
 
+    public void restarStock(int cant){
+        this.producto.cantidad = producto.cantidad - cant;
+    }
+
     @Override
     public String toString() {
         return "Pedido{" +
